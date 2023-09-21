@@ -127,3 +127,84 @@ def test_incorrect_data_type():
         check_for_todo(100)
     error_message = str(e.value)
     assert error_message == "Error: invalid data type, only takes text."
+
+
+'''
+Design
+DiaryEntry()
+
+'''
+
+def test_format_correct():
+    dracula = DiaryEntry("Dracula", "1 2 3 4 5 6 7 8 9 10")
+    assert dracula.format() == "Dracula: 1 2 3 4 5 6 7 8 9 10"
+
+
+'''
+Given that the user inputs a diary entry and uses count(),
+It returns the number of words in that text.
+'''
+def test_word_count_of_text_correct():
+    dracula = DiaryEntry("Dracula", "1 2 3 4 5 6 7 8 9 10")
+    assert dracula.count_words() == 10
+
+
+'''
+Given the user inputs their wpm and uses reading_time(),
+It returns an estimate for how many minutes it would take to read the contents at that wpm.
+'''
+
+def test_reading_time_estimate_correct():
+    dracula = DiaryEntry("Dracula", "1 2 3 4 5 6 7 8 9 10")
+    assert dracula.reading_time(2) == 5
+
+'''
+Given that the user inputs how many minutes of time they have to read and their wpm,
+It returns a chunk of text that they could read in that time.
+'''
+
+def test_chunk_of_text_user_could_read_correct():
+    dracula = DiaryEntry("Dracula", "1 2 3 4 5 6 7 8 9 10")
+    assert dracula.reading_chunk(5, 1) == "1 2 3 4 5"
+
+'''
+Given that the user uses reading_chunk() again,
+It returns a chunk of text starting from where they left off.
+'''
+
+# def test_reading_chunk_continues_from_last_position():
+#     dracula = DiaryEntry("Dracula", "1 2 3 4 5 6 7 8 9 10")
+#     dracula.reading_chunk(5, 1)
+#     assert dracula.reading_chunk(5, 1) == "6 7 8 9 10"
+
+
+'''
+Given that the user has finished the text,
+If they use reading_chunk() again, it starts from the beginning.
+'''
+
+# def test_once_text_completely_read_start_from_beginning():
+#     dracula = DiaryEntry("Dracula", "1 2 3 4 5 6 7 8 9 10")
+#     dracula.reading_chunk(5, 1)
+#     dracula.reading_chunk(5, 1)
+#     assert dracula.reading_chunk(7, 1) == "1 2 3 4 5 6 7"
+
+
+'''
+Design
+GrammarStats()
+
+'''
+
+'''
+Given that a user calls the percentage_good() method,
+It returns the percentage of texts checked so far that pass the check.
+e.g. if 4 texts have been through check(), and 2 had good grammar, this should return 50 (50%).
+'''
+def test_grammar_accuracy_percentage():
+    sentences = GrammarStats()
+    sentences.check("This sentence has good grammar.")
+    sentences.check("This sentence also has good grammar.")
+    sentences.check("this sentence does not have good grammar")
+    sentences.check("this sentence also does not have good grammar")
+    assert sentences.percentage_good() == 50
