@@ -153,4 +153,45 @@ class GrammarStats:
         print(self.num_of_checks)
         num1 = (self.num_of_checks - self.accurate) / self.num_of_checks
         percentage = 100 - (num1 * 100)
-        return percentage
+        return percentage 
+
+'''
+Design a Single-Class Program - Exercise
+'''
+class TodoTaskTracker():
+    def __init__(self):
+        self.task_list = []
+    def add(self, task):
+        if task in self.task_list:
+            raise Exception("You've already added this task to your list.")
+        self.task_list.append(task)
+    def display_tasks(self):
+        if len(self.task_list) == 0:
+            raise Exception("You have no tasks to display.")
+        return self.task_list
+    def task_completed(self, task):
+        if task not in self.task_list:
+            raise Exception("Task does not exist in your list.")
+        self.task_list.remove(task)
+        return f"Task: {task} has been completed. Checking it off your list... current todo list now: {self.task_list}"
+
+
+'''
+Challenge
+'''
+class MusicTracker():
+    def __init__(self):
+        self.music_list = []
+
+    def add(self, music):
+        if type(music) != str:
+            raise Exception("Error: can only take text.")
+        if music in self.music_list:
+            raise Exception("You've already added this song to your listening record.")
+        self.music_list.append(music)
+        # possible to maybe refactor these if statements.
+
+    def display_tracks(self):
+        if len(self.music_list) == 0:
+            raise Exception("No track listening record available. Try adding some songs first.")
+        return self.music_list

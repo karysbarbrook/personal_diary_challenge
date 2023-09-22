@@ -208,3 +208,99 @@ def test_grammar_accuracy_percentage():
     sentences.check("this sentence does not have good grammar")
     sentences.check("this sentence also does not have good grammar")
     assert sentences.percentage_good() == 50
+
+'''
+Design
+
+As a user
+So that I can keep track of my tasks
+I want a program that I can add todo tasks to and see a list of them.
+
+As a user
+So that I can focus on tasks to complete
+I want to mark tasks as complete and have them disappear from the list.
+
+'''
+
+def test_display_one_task_correct():
+    tasks = TodoTaskTracker()
+    tasks.add("Wash the dishes")
+    assert tasks.display_tasks() == ["Wash the dishes"]
+
+def test_display_multiple_tasks_correct():
+    tasks = TodoTaskTracker()
+    tasks.add("Wash the dishes")
+    tasks.add("Mow the lawn")
+    tasks.add("Make dinner at 7pm")
+    assert tasks.display_tasks() == ["Wash the dishes", "Mow the lawn", "Make dinner at 7pm"]
+
+def test_task_checklist_works():
+    tasks = TodoTaskTracker()
+    tasks.add("Wash the dishes")
+    tasks.add("Mow the lawn")
+    tasks.add("Make dinner at 7pm")
+    assert tasks.task_completed("Mow the lawn") == "Task: Mow the lawn has been completed. Checking it off your list... current todo list now: ['Wash the dishes', 'Make dinner at 7pm']"
+
+def test_error_when_no_tasks_to_display():
+    tasks = TodoTaskTracker()
+    with pytest.raises(Exception) as e:
+        tasks.display_tasks()
+    error_message = str(e.value)
+    assert error_message == "You have no tasks to display."
+
+def test_error_when_task_does_not_exist():
+    tasks = TodoTaskTracker()
+    with pytest.raises(Exception) as e:
+        tasks.task_completed("Do my laundry")
+    error_message = str(e.value)
+    assert error_message == "Task does not exist in your list."
+
+def test_error_when_trying_to_add_task_that_already_exists():
+    tasks = TodoTaskTracker()
+    tasks.add("Wash the dishes")
+    with pytest.raises(Exception) as e:
+        tasks.add("Wash the dishes")
+    error_message = str(e.value)
+    assert error_message == "You've already added this task to your list."
+
+# def test_task_completed_is_not_case_sensitive():
+#     tasks = TodoTaskTracker()
+#     tasks.add("Mow the lawn")
+#     assert tasks.task_completed("mow the lawn") == "Task: mow the lawn has been completed. Checking it off your list... current todo list now: ['wash the dishes', 'make dinner at 7pm']"
+
+
+'''
+Design
+
+MusicTracker() - Challenge
+
+'''
+
+def test_multiple_tracks_display_correct():
+    tracking_music = MusicTracker()
+    tracking_music.add("Queen: Don't Stop Me Now")
+    tracking_music.add("Adele: Rolling In The Deep")
+    tracking_music.add("Nothing But Thieves: Impossible")
+    assert tracking_music.display_tracks() == ["Queen: Don't Stop Me Now", "Adele: Rolling In The Deep", "Nothing But Thieves: Impossible"]
+
+def test_correct_data_type():
+    tracking_music = MusicTracker()
+    with pytest.raises(Exception) as e:
+        tracking_music.add(236)
+    error_message = str(e.value)
+    assert error_message == "Error: can only take text."
+
+def test_error_when_empty_list_displayed():
+    tracking_music = MusicTracker()
+    with pytest.raises(Exception) as e:
+        tracking_music.display_tracks()
+    error_message = str(e.value)
+    assert error_message == "No track listening record available. Try adding some songs first."
+
+def test_error_when_adding_song_already_added():
+    tracking_music = MusicTracker()
+    tracking_music.add("Queen: Don't Stop Me Now")
+    with pytest.raises(Exception) as e:
+        tracking_music.add("Queen: Don't Stop Me Now")
+    error_message = str(e.value)
+    assert error_message == "You've already added this song to your listening record."
